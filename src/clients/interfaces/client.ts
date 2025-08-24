@@ -1,3 +1,12 @@
+export interface ClientResponseData {
+  first: number;
+  prev: number | null;
+  next: number | null;
+  last: number | null;
+  items: number;
+  data: Client[];
+}
+
 export interface Client {
   id: number;
   isActive: boolean;
@@ -16,3 +25,4 @@ export enum Gender {
   Female = "Female",
   Male = "Male",
 }
+

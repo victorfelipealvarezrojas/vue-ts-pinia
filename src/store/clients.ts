@@ -1,11 +1,10 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { Client } from "@/clients/interfaces/client";
 
 export const useCientStore = defineStore("clients", () => {
   const currentPage = ref(1);
   const totalPages = ref(5);
-  const clients = ref<Client[]>([]);
+  const clients = ref<any>();
 
   return {
     // State properties
@@ -16,14 +15,15 @@ export const useCientStore = defineStore("clients", () => {
     // Getters
 
     // Actions
-    setClients(newClients: Client[]) {
+    setClients(newClients: any) {
       clients.value = newClients;
     },
-    setPAGE(newPage: number) {
-      if (currentPage.value === newPage) {
-        return;
-      }
-      currentPage.value = newPage;
+    setPage(page: number) {
+      if (currentPage.value === page) return;
+      if (page <= 0) return;
+      if (page > totalPages.value) return;
+
+      currentPage.value = page;
     },
   };
 });
