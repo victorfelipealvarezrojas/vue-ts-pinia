@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, toRef, watch } from "vue";
-import useClientsQuery from "../composables/useClientsQuery";
-
-const { getPage} = useClientsQuery();
 
 const props = defineProps<{
     totalPages: number;
     currentPage: number;
 }>();
+
+const emit = defineEmits(['page-changed']);
 
 const currentPage = toRef(props, "currentPage");
 const totalPages = toRef(props, "totalPages");
@@ -22,16 +21,16 @@ watch(totalPages, () => {
 
 <template>
   <div>
-    <button :disabled="currentPage === 1" @click="getPage(currentPage-1)">Anterior</button>
+    <button :disabled="currentPage === 1" @click="emit('page-changed',currentPage-1)">Anterior</button>
     <button
       :class="{ active: currentPage === number }"
       v-for="number of totalPageNumbers"
       :key="number"
-      @click="getPage(number)"
+      @click="emit('page-changed', number)"
     >
       {{ number }}
     </button>
-    <button :disabled="currentPage === totalPages" @click="getPage(currentPage+1)">Siguiente</button>
+    <button :disabled="currentPage === totalPages" @click="emit('page-changed',currentPage+1)">Siguiente</button>
   </div>
 </template>
 
