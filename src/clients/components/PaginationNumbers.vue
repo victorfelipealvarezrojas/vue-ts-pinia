@@ -1,7 +1,23 @@
 <script setup lang="ts">
+import { ref, toRef, watch } from "vue";
 import useClientsQuery from "../composables/useClientsQuery";
 
-const { getPage, totalPageNumbers, currentPage, totalPages } = useClientsQuery();
+const { getPage} = useClientsQuery();
+
+const props = defineProps<{
+    totalPages: number;
+    currentPage: number;
+}>();
+
+const currentPage = toRef(props, "currentPage");
+const totalPages = toRef(props, "totalPages");
+
+const totalPageNumbers = ref<number[]>([]);
+watch(totalPages, () => {
+  totalPageNumbers.value = [...new Array(totalPages.value)].map((_,i) => i + 1);
+}, { immediate: true });
+
+
 </script>
 
 <template>

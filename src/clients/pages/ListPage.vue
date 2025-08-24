@@ -3,7 +3,7 @@ import ClientList from '../components/ClientList.vue';
 import PaginationNumbers from '../components/PaginationNumbers.vue';
 import useClientsQuery from '../composables/useClientsQuery';
 
-const {isLoading, clients } = useClientsQuery();
+const {isLoading, clients, currentPage, totalPages } = useClientsQuery();
 
 </script>
 
@@ -15,10 +15,11 @@ const {isLoading, clients } = useClientsQuery();
     <ClientList :clients="clients"/>
 
   <!-- Paginacion -->
-  <PaginationNumbers />
+  <PaginationNumbers :current-page="currentPage" :total-pages="totalPages" />
 
 
   <!-- Loading -->
+  <div v-if="isLoading">Cargando...</div>
 
   </div>
 </template>
